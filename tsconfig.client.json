@@ -1,0 +1,24 @@
+{
+  // Compiles static/app.ts (browser code) to build/app.js.
+  // Run with: npx tsc -p tsconfig.client.json
+  "compilerOptions": {
+    "rootDir": "./static",
+    "outDir": "./build",
+
+    "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "bundler",
+    "lib": ["es2020", "dom"],
+    "types": [],
+
+    "noEmit": false,
+    "sourceMap": true,
+
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true
+  },
+  "include": [ "static/*.ts", "data/*.ts"]
+}
