@@ -38,5 +38,5 @@
   // static/app.ts runs in the browser (DOM globals, no Node types) and is
   // compiled separately by tsconfig.client.json — exclude it here so this
   // project's rootDir/types don't conflict with it.
-  "exclude": ["static/jokes/app.ts", "build/*.ts"]
+  "exclude": ["static/**/*.ts", "build/*.ts"]
 }

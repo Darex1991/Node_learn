@@ -4,10 +4,13 @@ import { closeMongoDB, connectToMongoDB } from "./data/students/studentDb";
 import { closeMongoClient, connectToCarsDb } from "./data/cars/carsDb";
 import { PORT } from "./utils/httpStatic";
 import { getJokes } from "./routes/jokes";
+import { getJokesWithMongoDB } from "./routes/jokesWithMongoDB";
 
 const server = http.createServer(
   async (req: http.IncomingMessage, res: http.ServerResponse) => {
-    if (req.url && req.url.includes("/api/jokes")) {
+    if (req.url && req.url.includes("/api/jokesWithMongoD")) {
+      getJokesWithMongoDB(req, res);
+    } else if (req.url && req.url.includes("/api/jokes")) {
       getJokes(req, res);
     } else {
       serviceStaticFiles(req, res);

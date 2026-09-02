@@ -51,6 +51,12 @@ web_modules/
 # TypeScript cache
 *.tsbuildinfo
 
+# Stray tsc output emitted next to .ts sources when a file is compiled
+# directly (e.g. VSCode "Run" button / Code Runner), which ignores
+# tsconfig.json's noEmit — legitimate JS output only lives in build/
+/**/*.js
+/**/*.js.map
+
 # Optional npm cache directory
 .npm
 

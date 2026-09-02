@@ -1,32 +1,49 @@
+import type { InsertManyResult, WithId } from "mongodb";
 import * as studentModel from "../model/studentModel";
+import type { Student } from "../types/students";
 
-export const getAllStudents = async () => {
+export const getAllStudents = async (): Promise<WithId<Student>[] | Error> => {
   try {
-    return await studentModel.getAllStudents();
+    const students = await studentModel.getAllStudents();
+    if (!students) {
+      return new Error("No students found");
+    }
+    return students;
   } catch (error) {
-    return error;
+    return new Error("Failed to get all students", { cause: error });
   }
 };
 
-export const findStudentByName = async (name: string) => {
+export const findStudentByName = async (
+  name: string,
+): Promise<WithId<Student> | Error> => {
   try {
-    return await studentModel.findStudentByName(name);
+    const student = await studentModel.findStudentByName(name);
+    if (!student) {
+      return new Error("Student not found");
+    }
+    return student;
   } catch (error) {
-    return error;
+    return new Error("Failed to find student by name", { cause: error });
   }
 };
 
-export const seedStudents = async () => {
+export const seedStudents = async (): Promise<
+  InsertManyResult<Student> | Error
+> => {
   try {
-    await studentModel.insertStudents([
+    const students = await studentModel.insertStudents([
       { name: "John", age: 20, email: "john@example.com" },
       { name: "Jane", age: 21, email: "jane@example.com" },
       { name: "Jim", age: 22, email: "jim@example.com" },
-      { name: "Jill", age: 23, email: "jill@example.com" },
-      { name: "Jack", age: 24, email: "jack@example.com" },
     ]);
-    return await studentModel.getAllStudents();
+
+    if (!students) {
+      return new Error("Failed to seed students");
+    }
+
+    return students;
   } catch (error) {
-    return error;
+    return new Error("Failed to seed students", { cause: error });
   }
 };

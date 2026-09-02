@@ -1,5 +1,12 @@
 import "dotenv/config";
-import { MongoClient, ServerApiVersion, type BulkWriteOptions } from "mongodb";
+import {
+  Db,
+  MongoClient,
+  ServerApiVersion,
+  type BulkWriteOptions,
+  type InsertManyResult,
+  type InsertOneResult,
+} from "mongodb";
 
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
@@ -56,29 +63,40 @@ export const closeMongoClient = async () => {
     await mongoClient.close();
     mongoClient = null;
   }
-}
-
-export const getJokesDb = async () => {
-  if (!mongoClient) {
-    await connectToJokesDb();
-  }
-  return mongoClient?.db("jokes");
 };
 
-export const insertJoke = async (joke: Joke) => {
-  const db = await getJokesDb();
-  if (!db) {
-    throw new Error("Database not connected");
+export const getJokesDb = async (): Promise<Db | null> => {
+  if (!mongoClient) {
+    const client = await connectToJokesDb();
+    if (!client) {
+      throw new Error("Failed to connect to MongoDB", { cause: client });
+    }
+    mongoClient = client;
+    return client.db("jokes");
   }
-  const result = await db.collection("jokes").insertOne({ joke });
+  return mongoClient.db("jokes");
+};
+
+export const insertJoke = async (
+  joke: Joke,
+): Promise<InsertOneResult<Joke> | Error> => {
+  const db = await getJokesDb();
+  const result = await db?.collection("jokes").insertOne({ joke });
+
+  if (!result) {
+    return new Error("Failed to insert joke", { cause: result });
+  }
   return result;
 };
 
-export const insertManyJokes = async (jokes: Joke[], options: BulkWriteOptions) => {
+export const insertManyJokes = async (
+  jokes: Joke[],
+  options: BulkWriteOptions,
+): Promise<InsertManyResult<Joke> | Error> => {
   const db = await getJokesDb();
-  if (!db) {
-    throw new Error("Database not connected");
+  const result = await db?.collection("jokes").insertMany(jokes, options);
+  if (!result) {
+    return new Error("Failed to insert many jokes", { cause: result });
   }
-  const result = await db.collection("jokes").insertMany(jokes, options);
   return result;
 };

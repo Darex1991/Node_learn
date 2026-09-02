@@ -1,0 +1,16 @@
+---
+description: How to run or type-check TypeScript files in this repo
+globs: ["**/*.ts"]
+alwaysApply: true
+---
+
+Never run `tsc` directly on a single file (e.g. `tsc some/file.ts` or `npx tsc some/file.ts`).
+Passing a filename to `tsc` on the command line makes it ignore `tsconfig.json` entirely
+(including `noEmit: true`), which leaves stray `.js` / `.js.map` files next to the source.
+
+- To run/execute a `.ts` file (server code): use `npx tsx path/to/file.ts`.
+  The project already runs this way via `npm start` / `npm run start:dev`.
+- To type-check without executing or emitting anything: use
+  `npx tsc --noEmit -p tsconfig.json` (server code) or
+  `npx tsc --noEmit -p tsconfig.client.json` (browser code under `static/`).
+- Never invent ad-hoc `tsc` invocations to "quickly check" a file — use the commands above.
