@@ -21,7 +21,7 @@ export const getJokeById = async (id: string) => {
 export const asyncRandomJoke = async () => {
   try {
     const jokes = await getAllJokes();
-    if (jokes) {
+    if (jokes && Array.isArray(jokes)) {
       return jokes[Math.floor(Math.random() * jokes.length)];
     } else {
       return null;

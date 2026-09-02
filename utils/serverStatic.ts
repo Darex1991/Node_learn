@@ -43,6 +43,11 @@ export const serviceStaticFiles = (
 
   if (fs.existsSync(filePath)) {
     if (fs.statSync(filePath).isDirectory()) {
+      if (!baseURL.endsWith("/")) {
+        res.writeHead(301, { Location: `${baseURL}/` });
+        res.end();
+        return;
+      }
       const indexPath = path.join(filePath, "index.html");
       console.log({ indexPath }, "indexPath");
       if (fs.existsSync(indexPath)) {

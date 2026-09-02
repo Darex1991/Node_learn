@@ -5,15 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./style.css" />
-    <script type="module" src="/build/app.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="/build/jokes/app.js"></script>
 </head>
 <body>
     <div id="container">
-        <div class="some-jokes">
+        <div class="loading"></div>
+        <div class="some-jokes hidden">
             <span></span>
         </div>
-        <button id="next-joke" onclick="nextJoke()">Next Joke</button>
+        <button id="next-joke">Next Joke</button>
     </div>
 </body>
 </html>

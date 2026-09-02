@@ -1,7 +1,8 @@
-import { insertCars, closeMongoClient } from "./carsDb";
+import { seedCars } from "../../controllers/carController";
+import { closeMongoClient } from "./carsDb";
 
 const seed = async () => {
-  await insertCars();
+  await seedCars();
   await closeMongoClient();
   process.exit(0);
 };

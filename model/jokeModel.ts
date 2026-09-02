@@ -1,25 +1,22 @@
-import jokes from "../data/jokes.json" with { type: "json" };
+import jokes from "../data/jokes/jokes.json" with { type: "json" };
 type Joke = {
   id: number;
-  joke: string;
+  text: string;
 };
-// import type { Joke } from "../types/joke";
 
 export const getAllJokes = (): Promise<Joke[]> => {
   return new Promise((resolve, reject) => {
-    resolve(jokes);
+    resolve(jokes.map((joke) => ({ id: joke.id, text: joke.text })));
   });
 };
 
 export const getById = (id: string): Promise<Joke> => {
-  console.log(id, "id");
   return new Promise((resolve, reject) => {
     const joke = jokes.find((joke) => joke.id === parseInt(id));
     if (joke) {
-      resolve(joke);
+      resolve({ id: joke.id, text: joke.text });
     } else {
       reject(new Error("Joke not found"));
     }
-    console.log(joke, "joke");
   });
 };

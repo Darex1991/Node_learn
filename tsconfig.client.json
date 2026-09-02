@@ -20,5 +20,5 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": [ "static/*.ts", "data/*.ts"]
+  "include": [ "static/**/*.ts"]
 }
