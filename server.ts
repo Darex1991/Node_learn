@@ -5,6 +5,8 @@ import { closeMongoClient, connectToCarsDb } from "./data/cars/carsDb";
 import { PORT } from "./utils/httpStatic";
 import { getJokes } from "./routes/jokes";
 import { getJokesWithMongoDB } from "./routes/jokesWithMongoDB";
+import { getCars } from "./routes/cars";
+import { getStudents } from "./routes/students";
 
 const server = http.createServer(
   async (req: http.IncomingMessage, res: http.ServerResponse) => {
@@ -12,6 +14,10 @@ const server = http.createServer(
       getJokesWithMongoDB(req, res);
     } else if (req.url && req.url.includes("/api/jokes")) {
       getJokes(req, res);
+    } else if (req.url && req.url.includes("/api/cars")) {
+      getCars(req, res);
+    } else if (req.url && req.url.includes("/api/students")) {
+      getStudents(req, res);
     } else {
       serviceStaticFiles(req, res);
     }

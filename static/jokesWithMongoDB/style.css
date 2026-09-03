@@ -31,18 +31,3 @@ span {
     border-radius: 5px;
     background-color: #f0f0f0;
 }
-
-.loading {
-    background-image: url('/images/loading.gif');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-self: center;
-}
-
-.hidden {
-    display: none;
-}
