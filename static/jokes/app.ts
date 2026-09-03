@@ -10,7 +10,7 @@ const getJokesData = async () => {
   return data;
 };
 
-const displayJokesData = (joke: { text: string }) => {
+const displayJokesData = (joke: { joke: string }) => {
   console.log(document.querySelector(".some-jokes"));
   const jokeElement = document
     .querySelector(".some-jokes")
@@ -21,7 +21,7 @@ const displayJokesData = (joke: { text: string }) => {
     console.log("jokeElement not found");
     return;
   }
-  jokeElement.textContent = joke.text;
+  jokeElement.textContent = joke.joke;
 };
 
 const showLoading = () => {

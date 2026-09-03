@@ -1,0 +1,28 @@
+.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Układa elementy w poziomie */
+    background-color: #333; /* Kolor tła paska nawigacji */
+  }
+  
+  /* Styl elementów listy */
+  .menu li {
+    margin: 0;
+  }
+  
+  /* Styl linków w menu */
+  .menu a {
+    display: block;
+    color: white; /* Kolor tekstu */
+    text-align: center;
+    padding: 14px 16px; /* Odstępy wewnątrz przycisku */
+    text-decoration: none; /* Usunięcie podkreślenia */
+    font-family: sans-serif;
+    transition: background-color 0.3s; /* Płynna zmiana koloru */
+  }
+  
+  /* Efekt po najechaniu myszką */
+  .menu a:hover {
+    background-color: #111; /* Ciemniejsze tło przy najechaniu */
+  }

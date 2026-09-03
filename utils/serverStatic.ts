@@ -33,6 +33,18 @@ export const serviceStaticFiles = (
   const filePath = baseURL.startsWith("/build/")
     ? path.join(import.meta.dirname, "../", baseURL)
     : path.join(import.meta.dirname, "../", "static", baseURL);
+  const indexBuildPath = path.join(
+    import.meta.dirname,
+    "../",
+    "static",
+    "index.html",
+  );
+  const menuBarPath = path.join(
+    import.meta.dirname,
+    "../",
+    "static",
+    "menu_bar.html",
+  );
 
   const extension: string = path.extname(baseURL).slice(1);
 
@@ -42,17 +54,43 @@ export const serviceStaticFiles = (
       : "text/plain";
 
   if (fs.existsSync(filePath)) {
+    console.log({ filePath }, "filePath");
     if (fs.statSync(filePath).isDirectory()) {
       if (!baseURL.endsWith("/")) {
         res.writeHead(301, { Location: `${baseURL}/` });
         res.end();
         return;
       }
+
       const indexPath = path.join(filePath, "index.html");
-      console.log({ indexPath }, "indexPath");
+
       if (fs.existsSync(indexPath)) {
         res.writeHead(200, { "Content-Type": mimeTypes.html });
-        res.end(fs.readFileSync(indexPath));
+
+        let content = fs.readFileSync(indexBuildPath, { encoding: "utf-8" });
+        if (indexBuildPath === indexPath) {
+          content = content.replace("{#body_content#}", "");
+        } else {
+          const bodyContent = fs.readFileSync(indexPath, { encoding: "utf-8" });
+          content = content.replace("{#body_content#}", bodyContent);
+        }
+
+        const headPath = path.join(filePath, "head.html");
+        if (fs.existsSync(headPath)) {
+          const headFromPath = fs.readFileSync(headPath, { encoding: "utf-8" });
+          content = content.replace("{#head#}", headFromPath);
+        } else {
+          content = content.replace("{#head#}", "");
+        }
+
+        if (fs.existsSync(menuBarPath)) {
+          const menuBarFromPath = fs.readFileSync(menuBarPath, {
+            encoding: "utf-8",
+          });
+          content = content.replace("{#menu_bar#}", menuBarFromPath);
+        }
+
+        res.end(content);
         return;
       } else {
         res.writeHead(404, { "Content-Type": "text/plain" });
