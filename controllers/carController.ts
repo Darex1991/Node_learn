@@ -18,17 +18,17 @@ export const seedCars = async (): Promise<WithId<Car>[] | Error> => {
   try {
     await carModel.insertOneCar({
       name: "Car 1",
-      brand: "Brand 3",
-      color: "Color 3",
+      brand: "Ford",
+      color: "Red",
     });
     await carModel.insertOneCar({
       name: "Car 2",
-      brand: "Brand 2",
-      color: "Color 2",
+      brand: "Ford",
+      color: "Blue",
     });
     await carModel.insertManyCars([
-      { name: "Car 3", brand: "Brand 3", color: "Color 3" },
-      { name: "Car 4", brand: "Brand 4", color: "Color 4" },
+      { name: "Car 3", brand: "Ford", color: "Green" },
+      { name: "Car 4", brand: "Ford", color: "Yellow" },
     ]);
 
     const cars = await carModel.getAllCars();
