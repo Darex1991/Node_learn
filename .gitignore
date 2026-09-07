@@ -2,6 +2,10 @@ node_modules/
 .env
 build/
 
+# Copied into static/ before each build so client code (rootDir-restricted
+# to static/) can import shared types — regenerate via `npm run copy:client-types`
+static/types/
+
 # Logs
 logs
 *.log

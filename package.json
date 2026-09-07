@@ -11,8 +11,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "copy:client-types": "mkdir -p static/types && cp types/quotes.ts static/types/quotes.ts",
+    "prestart": "npm run copy:client-types",
     "start": "tsx --watch server.ts",
+    "prestart:dev": "npm run copy:client-types",
     "start:dev": "concurrently -k -n server,client \"tsx --watch server.ts\" \"tsc -p tsconfig.client.json --watch\"",
+    "prebuild": "npm run copy:client-types",
     "build": "tsc -p tsconfig.client.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "typecheck:client": "tsc --noEmit -p tsconfig.client.json",
