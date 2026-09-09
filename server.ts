@@ -16,6 +16,7 @@ import {
 } from "./controllers/quoteController";
 import type { ObjectId } from "mongodb";
 import type { Quote } from "./types/quotes";
+import { getGames } from "./routes/games";
 
 const server = http.createServer(
   async (req: http.IncomingMessage, res: http.ServerResponse) => {
@@ -27,6 +28,8 @@ const server = http.createServer(
       getCars(req, res);
     } else if (req.url && req.url.includes("/api/students")) {
       getStudents(req, res);
+    } else if (req.url && req.url.includes("/api/games")) {
+      getGames(req, res);
     } else if (req.url === "/api/quotes" && req.method === "GET") {
       const quotes = await getQuotes();
       if (quotes) {
